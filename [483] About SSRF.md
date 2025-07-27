@@ -33,8 +33,14 @@
 - **應用程式的行為緣由？**
     
     - (1) **存取控制的檢查是<span class="blue">由前端 server 實作</span>：**
-    - ![image](https://hackmd.io/_uploads/BygxvRKKJl.png)
-    - ![image](https://hackmd.io/_uploads/rycGv0FK1g.png)
+        - **前端組件 (API Gateway) 負責身份驗證，只有授權的請求才會被轉發到後端 server**
+        
+        - **後端 app server 接收 API Gateway 轉發的請求並提供服務**
+        
+        - **用戶 --> API Gateway (檢查權限) --> app server (執行請求)**
+        
+        - **如果 app server 沒有進行額外身份驗證，攻擊者就能夠直接向 app server 發送請求，從而繞過 API Gateway 的存取控制**
+          - **例如： `curl http://backend-server/secret-data`**
 
     - (2) **基於<span class="light_purple">災後重建</span>的目標： 當管理員<span class="blue">遺失憑證</span>時，可以提供給管理員修復系統**
     
